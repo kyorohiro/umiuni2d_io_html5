@@ -41,6 +41,9 @@ class File extends io.File {
   String get name => _fileEntry.name;
   String get path => _fileEntry.fullPath;
 
+  Future<File> open() async {
+    return this;
+  }
   Future<io.File> close() async {
     return this;
   }

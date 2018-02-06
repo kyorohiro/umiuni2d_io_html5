@@ -34,8 +34,8 @@ Future main() async {
     List<umi.Entry> entries = await fileSystem.ls("").toList();
     String v = "<div> len : ${entries.length}<br>";
     for(umi.Entry e in entries) {
-      print("${e.path} ${await e.isDir()}");
-      v += "${(await e.isDir()?"D":"F")} : ${e.path}<br>";
+      print("${e.path} ${await e.isDirectory()}");
+      v += "${(await e.isDirectory()?"D":"F")} : ${e.path}<br>";
     }
     v += "</div>";
     consoleElement.innerHtml = v;

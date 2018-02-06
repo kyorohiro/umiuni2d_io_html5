@@ -16,7 +16,7 @@ class Directory extends io.Directory {
 
   }
 
-  Future<bool> isDir() async {
+  Future<bool> isDirectory() async {
     if(_fileEntry != null) {
       return _fileEntry.isDirectory;
     } else {
@@ -57,7 +57,7 @@ class File extends io.File {
 
   }
 
-  Future<bool> isDir() async {
+  Future<bool> isDirectory() async {
     if(_fileEntry != null) {
       return _fileEntry.isDirectory;
     } else {

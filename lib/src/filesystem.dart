@@ -20,10 +20,22 @@ class FileSystem extends io.FileSystem {
     return ret.future;
   }
 
+  Future<FileSystem> cd(String path) async {
+    path = await toAbsoltePath(path);
+    if(!await isDirectory(path)){
+      throw "not directory ${path}";
+    }
+    html.FileSystem fs = await init();
+    html.DirectoryEntry d = await fs.root.getDirectory(path);
+    _currentDirectory = new Directory(d);
+    return this;
+  }
+
   Future<io.FileSystem> mkdir(String path) async {
     path = await toAbsoltePath(path);
     html.FileSystem fs = await init();
     html.Entry e = await fs.root.createDirectory(path, exclusive: false);
+    print("## ${path} ${e.fullPath} ${e} isDir:${e.isDirectory}");
     return this;
   }
 
@@ -66,11 +78,12 @@ class FileSystem extends io.FileSystem {
     path = await toAbsoltePath(path);
     html.FileSystem  fs = await init();
     try {
-      html.Entry e = await fs.root.getFile(path);
+      html.Entry e = await fs.root.getDirectory(path);
       if(e.isDirectory) {
         return true;
       }
     } catch(e){
+      print("EE ${e}");
     }
     return false;
   }
@@ -105,10 +118,10 @@ class FileSystem extends io.FileSystem {
         html.DirectoryEntry d = await fs.root.getDirectory(path);
         List<html.Entry> ds = await d.createReader().readEntries();
         for(html.Entry e in ds) {
-          if(e.isFile) {
-            yield new File(e);
+          if(e.isDirectory) {
+            yield new Directory(e);
           } else {
-            yield new Directory(d);
+            yield new File(e);
           }
         }
       }

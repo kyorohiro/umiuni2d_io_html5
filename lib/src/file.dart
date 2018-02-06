@@ -8,7 +8,7 @@ class Directory extends io.Directory {
   String get name => _fileEntry.name;
   String get path => _fileEntry.fullPath;
   Future<bool> isFile() async {
-    if(_fileEntry == null) {
+    if(_fileEntry != null) {
       return _fileEntry.isFile;
     } else {
       return false;
@@ -17,7 +17,7 @@ class Directory extends io.Directory {
   }
 
   Future<bool> isDir() async {
-    if(_fileEntry == null) {
+    if(_fileEntry != null) {
       return _fileEntry.isDirectory;
     } else {
       return false;
@@ -25,7 +25,7 @@ class Directory extends io.Directory {
   }
 
   Future<bool> exists() async {
-    if(_fileEntry == null) {
+    if(_fileEntry != null) {
       return false;
     } else {
       return true;
@@ -46,7 +46,7 @@ class File extends io.File {
   }
 
   Future<bool> isFile() async {
-    if(_fileEntry == null) {
+    if(_fileEntry != null) {
       return _fileEntry.isFile;
     } else {
       return false;
@@ -55,7 +55,7 @@ class File extends io.File {
   }
 
   Future<bool> isDir() async {
-    if(_fileEntry == null) {
+    if(_fileEntry != null) {
       return _fileEntry.isDirectory;
     } else {
       return false;
@@ -63,7 +63,7 @@ class File extends io.File {
   }
 
   Future<bool> exists() async {
-    if(_fileEntry == null) {
+    if(_fileEntry != null) {
       return false;
     } else {
       return true;

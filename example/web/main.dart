@@ -65,7 +65,6 @@ Future main() async {
     umi.Entry e = await fileSystem.wd();
     print("${e.path}");
     consoleElement.innerHtml = "${e.path}";
-    lsFunc();
   });
 
   html.document

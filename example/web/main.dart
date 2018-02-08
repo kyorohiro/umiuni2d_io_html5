@@ -35,7 +35,7 @@ Future main() async {
     String v = "<div> len : ${entries.length}<br>";
     for(umi.Entry e in entries) {
       print("${e.path} ${await e.isDirectory()}");
-      v += "${(await e.isDirectory()?"D":"F")} : ${e.path}<br>";
+      v += "${(await e.isDirectory()?"D":"F")} : ${e.name}<br>";
     }
     v += "</div>";
     consoleElement.innerHtml = v;
@@ -81,10 +81,9 @@ Future main() async {
       .onClick
       .listen((html.Event e) async {
     print("+5s");
-    umi.File f = await fileSystem.open(mkfileInputElement.value);
+    umi.File f = await fileSystem.getEntry(mkfileInputElement.value);
     List<int> buffer = conv.UTF8.encode("Hello, World!!");
     await f.writeAsBytes(buffer, 0);
-    await f.close();
     lsFunc();
 
   });
@@ -112,7 +111,7 @@ Future main() async {
       .onClick
       .listen((html.Event e) async {
     print("open");
-    umi.File f = await fileSystem.open(openInputElement.value);
+    umi.File f = await fileSystem.getEntry(openInputElement.value);
     List<int> v = await f.readAsBytes(0, await f.getLength());
     String value = "";
     try {
@@ -121,6 +120,5 @@ Future main() async {
       value = conv.BASE64.encode(v);
     }
     consoleElement.innerHtml ="<div>${value}</div>";
-    f.close();
   });
 }

@@ -128,20 +128,21 @@ class FileSystem extends io.FileSystem {
     }
   }
 
-  Future<io.File> open(String path) async {
+  Future<io.Entry> getEntry(String path) async {
     path = await toAbsoltePath(path);
     html.FileSystem fs = await init();
-    List<String> pat = path.split("/");
-    String dir = "/";
-    String fname = pat[pat.length-1];
-    for(int i=0;i<pat.length -1;i++) {
-      dir += pat[i]+"/";
+
+    if(await isDirectory(path)) {
+      return new Directory(await fs.root.getDirectory(path));
     }
+    String dir = dpath.dirname(path);
+    String fname = dpath.basename(path);
+    print("dir:${dir} fname:${fname}");
     html.DirectoryEntry ff = await fs.root.getDirectory(dir);
     return new File(await ff.createFile(fname, exclusive: false) as html.FileEntry) ;
   }
 
-  Future<io.Entry> getHomeDirectory() async {
+  Future<io.Directory> getHomeDirectory() async {
     html.FileSystem  fs = await init();
     return new Directory(fs.root);
   }
